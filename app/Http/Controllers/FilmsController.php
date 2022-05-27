@@ -2,83 +2,115 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Films;
+use App\Models\Realisateurs;
+use App\Models\Salles;
 use Illuminate\Http\Request;
+
 
 class FilmsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getFilms()
+    public function getAll()
     {
-        return view('films');
-    }
+        $films = Films::with('realisateur')->get();
+        $realisateur = Realisateurs::all();
+        $salles = Salles::all();
+        return view('films', [
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+            'films' => $films,
+            'realisateur' => $realisateur,
+            'salles' => $salles,
+
+        ]);
+    }
+    public function add(Request $request)
     {
-        //
-    }
+        //    if ($request->hasFile('affiche')) {
+        //     $path = $request->file('affiche')->store('/images','public');
+        //     }
+        $validate = $request->validate([
+            'titre' => 'required|max:150',
+            'resume' => 'required|max:150',
+            'duree' => 'required|max:150',
+            'casting' => 'required|max:150',
+            'realisateurs' => 'required|exists:realisateurs,id',
+            'salles' => 'required|exists:salles,id',
+            // 'affiche'=>'required',
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
+        ]);
+        $films = new Films();
+        $films->titre = $validate['titre'];
+        $films->resume = $validate['resume'];
+        $films->duree = $validate['duree'];
+        $films->casting = $validate['casting'];
+        $films->real_id = $validate['realisateurs'];
+        $films->salle_id = $validate['salles'];
+        // $films->affiche = $path;
+
+
+
+
+
+        $films->save();
+        return redirect()->route('films');
+    }
     public function show($id)
     {
-        //
-    }
+        $film = Films::find($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+        return view('film', [
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+            'films' => $film,
+
+        ]);
+    }
     public function update(Request $request, $id)
     {
-        //
+
+        $validate = $request->validate([
+            'titre' => 'required|max:150',
+            'extrait' => 'required|max:150',
+            'realisateurs' => 'required|exists:réalisateurs,id',
+            'salles' => 'required|exists:salles,id',
+
+
+        ]);
+        $film = Films::find($id);
+
+        $film->titre = $validate['titre'];
+        $film->extrait = $validate['extrait'];
+        $film->real_id = $validate['realisateurs'];
+        $film->salle_id = $validate['salles'];
+
+
+
+        $film->update();
+        return redirect()->route('films');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function showUpdate($id)
+    {
+        $film = Films::find($id);
+        $realisateur = Realisateurs::all();
+        $salle = Salles::all();
+
+        return view('update', [
+
+            'update' => $film,
+            'realisateur' => $realisateur,
+            'id' => $id,
+            'salle' => $salle,
+
+        ]);
+    }
+
     public function destroy($id)
     {
-        //
+        $delete = Films::find($id);
+        $delete->delete();
+
+        return redirect()->route('films');
     }
 }
