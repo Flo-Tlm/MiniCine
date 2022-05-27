@@ -25,9 +25,9 @@ class FilmsController extends Controller
     }
     public function add(Request $request)
     {
-        //    if ($request->hasFile('affiche')) {
-        //     $path = $request->file('affiche')->store('/images','public');
-        //     }
+           if ($request->hasFile('affiche')) {
+            $path = $request->file('affiche')->store('/images','public');
+            }
         $validate = $request->validate([
             'titre' => 'required|max:150',
             'resume' => 'required|max:150',
@@ -35,7 +35,7 @@ class FilmsController extends Controller
             'casting' => 'required|max:150',
             'realisateurs' => 'required|exists:realisateurs,id',
             'salles' => 'required|exists:salles,id',
-            // 'affiche'=>'required',
+            'affiche'=>'required',
 
 
 
@@ -47,7 +47,7 @@ class FilmsController extends Controller
         $films->casting = $validate['casting'];
         $films->real_id = $validate['realisateurs'];
         $films->salle_id = $validate['salles'];
-        // $films->affiche = $path;
+        $films->affiche = $path;
 
 
 
@@ -59,10 +59,18 @@ class FilmsController extends Controller
     public function show($id)
     {
         $film = Films::find($id);
+        $real = Realisateurs::find($id);
+
+
+
+
 
         return view('film', [
 
+
             'films' => $film,
+            'reals' => $real,
+
 
         ]);
     }
