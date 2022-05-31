@@ -27,6 +27,10 @@
         @yield('contenu')
     </main>
 
+    <main>
+        @yield('content')
+    </main>
+
   
 
     <!-- footer -->

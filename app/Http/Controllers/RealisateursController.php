@@ -28,10 +28,12 @@ class RealisateursController extends Controller
 
 
             'films' => $real,
-            'real' => $reals,
+            'real' => $real,
 
 
         ]);
+
+        
     }
 }
 

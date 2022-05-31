@@ -13,6 +13,7 @@
         @foreach ($films as $film)
             <tr class="bg-gray-700 border-b border-gray-600">
                 <td class="px-4 py-3"> <a href="/films/{{ $film['id'] }}">{{ $film['titre'] }}</a></td>
+                <td class="px-4 py-3"> <img src="{{ asset('storage/' . $films->affiche)}} " alt="" width="150px"></td>
                
                
                 

@@ -3,7 +3,7 @@
     <div
         class="flex justify-between lg:w-auto w-full lg:border-b-0 pl-6 pr-2 border-solid border-b-2 border-gray-300 pb-5 lg:pb-0">
         <div class="flex items-center flex-shrink-0 text-gray-400 mr-16">
-            <span class="font-semibold text-xl tracking-tight">Test Lavarel</span>
+            <span class="font-semibold text-xl tracking-tight">MiniCiné</span>
         </div>
         <div class="block lg:hidden ">
             <button id="nav"

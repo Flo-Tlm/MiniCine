@@ -17,7 +17,7 @@
         
         </tr>
         <tr class="text-left border-b border-gray-300">
-       <<td class="px-4 py-3"> <img src="{{ asset('storage/' . $films->affiche)}} " alt="" width="150px"></td>
+       <td class="px-4 py-3"> <img src="{{ asset('storage/' . $films->affiche)}} " alt="" width="150px"></td>
         <td class="px-4 py-3">{{ $films->titre }}</td>
         <td class="px-4 py-3">{{ $films->resume }}</td>
         </tr>
